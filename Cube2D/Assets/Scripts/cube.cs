@@ -1,14 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class cube : MonoBehaviour
 {
     [SerializeField] private GameObject cubeObj;
     [SerializeField] private GameObject localCoordinateObj;
 
-    private float orgCubeX = 0, orgCubeY = 0;
-    private float orgLocalScaleX, orgLocalScaleY;
+    /*    private delegate float orgCubeX = 0；
+         private delegate float orgCubeY = 0;
+        private delegate float orgLocalScaleX, orgLocalScaleY;*/
 
     private Vector3 cubePosition = new Vector3(0, 0, 0);
     private Vector3 cubeScale;

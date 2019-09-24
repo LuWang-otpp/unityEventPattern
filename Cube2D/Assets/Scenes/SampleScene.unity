@@ -517,8 +517,8 @@ GameObject:
   m_Component:
   - component: {fileID: 497533624}
   - component: {fileID: 497533625}
-  - component: {fileID: 497533626}
   - component: {fileID: 497533627}
+  - component: {fileID: 497533626}
   m_Layer: 0
   m_Name: localCoordinate
   m_TagString: Untagged
@@ -598,18 +598,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 497533623}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41611939059586e41851968ac0d3f4a5, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a0759dfdd8e1098aa7b195fcdb8825c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubeObj: {fileID: 1300336031}
-  localCoordinateObj: {fileID: 497533623}
-  localXInpute: {fileID: 29640777}
-  localYInpute: {fileID: 697226122}
-  localRotateInpute: {fileID: 564173610}
-  localScaleXInpute: {fileID: 755916185}
-  localScaleYInpute: {fileID: 1676366926}
-  cubeXInpute: {fileID: 2080057097}
-  cubeYInpute: {fileID: 1379548397}
 --- !u!114 &497533627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1834,6 +1825,7 @@ GameObject:
   - component: {fileID: 967793273}
   - component: {fileID: 967793275}
   - component: {fileID: 967793274}
+  - component: {fileID: 967793276}
   m_Layer: 0
   m_Name: Panel
   m_TagString: Untagged
@@ -1900,6 +1892,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 967793272}
   m_CullTransparentMesh: 0
+--- !u!114 &967793276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 967793272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2d8d0b76f86a86dcb7efecad1bbe061, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localXInpute: {fileID: 0}
+  localYInpute: {fileID: 0}
+  localRotateInpute: {fileID: 0}
+  localScaleXInpute: {fileID: 0}
+  localScaleYInpute: {fileID: 0}
+  cubeXInpute: {fileID: 0}
+  cubeYInpute: {fileID: 0}
 --- !u!1 &1019472735
 GameObject:
   m_ObjectHideFlags: 0
