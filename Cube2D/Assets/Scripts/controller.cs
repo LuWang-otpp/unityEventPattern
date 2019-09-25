@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class controller : MonoBehaviour
+public class Controller : MonoBehaviour
 {
 
     [SerializeField] private Inputs inputes;
@@ -8,6 +9,9 @@ public class controller : MonoBehaviour
     private void Start()
     {
         inputes.localCoordinateChanged += localCoordinateChange;
+        inputes.localRotateChanged += localRotateChange;
+        inputes.localScaleChanged += localScaleChange;
+        inputes.cubeChanged += cubeChange;
     }
 
     private void localCoordinateChange(object sender, coordinateEventArgs e)
@@ -15,47 +19,81 @@ public class controller : MonoBehaviour
         float tmpX = e.x == "" ? 0 : float.Parse(e.x);
         float tmpY = e.y == "" ? 0 : float.Parse(e.y);
 
-        Debug.Log(string.Format("X: {0}, Y: {1}", tmpX, tmpY));
+        coordinateEventIntArgs args = new coordinateEventIntArgs(tmpX, tmpY);
+        EventHandler<coordinateEventIntArgs> handler = localCoordinateChanged;
+        if (handler != null)
+        {
+            handler(this, args);
+        }
     }
 
-    /*
+    private void localRotateChange(object sender, rotateEventArgs e)
+    {
+        float tmp = e.d == "" ? 0 : float.Parse(e.d);
+        tmp = tmp % 360;
 
+        Quaternion tmpQ = Quaternion.Euler(0, 0, tmp);
 
-        public void localRotateChange()
+        rotateEventIntArgs args = new rotateEventIntArgs(tmpQ);
+        EventHandler<rotateEventIntArgs> handler = localRotateChanged;
+        if (handler != null)
         {
-            float tmp = localRotateInpute.text == "" ? 0 : float.Parse(localRotateInpute.text);
-            tmp = tmp % 360;
-
-            Quaternion tmpQ = Quaternion.Euler(0, 0, tmp);
-
-            localCoordinateObj.transform.localRotation = tmpQ;
+            handler(this, args);
         }
+    }
 
-        public void localScaleChange()
+    private void localScaleChange(object sender, coordinateEventArgs e)
+    {
+        float tmpX = e.x == "" ? 0 : float.Parse(e.x);
+        float tmpY = e.y == "" ? 0 : float.Parse(e.y);
+
+        if (tmpX == 0) tmpX = 0.01f;
+        if (tmpY == 0) tmpY = 0.01f;
+
+        coordinateEventIntArgs args = new coordinateEventIntArgs(tmpX, tmpY);
+        EventHandler<coordinateEventIntArgs> handler = localScaleChanged;
+        if (handler != null)
         {
-            float tmpX = localScaleXInpute.text == "" ? 0 : float.Parse(localScaleXInpute.text);
-            float tmpY = localScaleYInpute.text == "" ? 0 : float.Parse(localScaleYInpute.text);
-
-            if (tmpX == 0) tmpX = 0.01f;
-            if (tmpY == 0) tmpY = 0.01f;
-
-            localScale.x = orgLocalScaleX * tmpX;
-            localScale.y = orgLocalScaleY * tmpY;
-
-            cubeScale.x = 1 / tmpX;
-            cubeScale.y = 1 / tmpY;
-            cubeObj.transform.localScale = cubeScale;
-            localCoordinateObj.transform.localScale = localScale;
+            handler(this, args);
         }
+    }
 
-        public void cubeChange()
+    private void cubeChange(object sender, coordinateEventArgs e)
+    {
+        float tmpX = e.x == "" ? 0 : float.Parse(e.x);
+        float tmpY = e.y == "" ? 0 : float.Parse(e.y);
+
+        coordinateEventIntArgs args = new coordinateEventIntArgs(tmpX, tmpY);
+        EventHandler<coordinateEventIntArgs> handler = cubeChanged;
+        if (handler != null)
         {
-            float tmpX = cubeXInpute.text == "" ? 0 : float.Parse(cubeXInpute.text);
-            float tmpY = cubeYInpute.text == "" ? 0 : float.Parse(cubeYInpute.text);
+            handler(this, args);
+        }
+    }
 
-            cubePosition.x = orgCubeX + tmpX / orgLocalScaleX;
-            cubePosition.y = orgCubeY + tmpY / orgLocalScaleY;
+    public event EventHandler<coordinateEventIntArgs> localCoordinateChanged;
+    public event EventHandler<rotateEventIntArgs> localRotateChanged;
+    public event EventHandler<coordinateEventIntArgs> localScaleChanged;
+    public event EventHandler<coordinateEventIntArgs> cubeChanged;
+}
 
-            cubeObj.transform.localPosition = cubePosition;
-        }*/
+public class coordinateEventIntArgs : EventArgs
+{
+    public float x, y;
+
+    public coordinateEventIntArgs(float x, float y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+public class rotateEventIntArgs : EventArgs
+{
+    public Quaternion d;
+
+    public rotateEventIntArgs(Quaternion d)
+    {
+        this.d = d;
+    }
 }

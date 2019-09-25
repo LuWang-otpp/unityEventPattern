@@ -12,25 +12,25 @@ public class Inputs : MonoBehaviour
     [SerializeField] private InputField cubeXInpute;
     [SerializeField] private InputField cubeYInpute;
 
-    public event EventHandler localCoordinateChangeHandler;
-
+    /*    private event EventHandler localCoordinateChangeHandler;
+        private event EventHandler localRotateChangeHandler;
+        private event EventHandler localScaleChangeHandler;
+        private event EventHandler cubeChangeHandler;*/
     private void Start()
     {
 
         localXInpute.onValueChanged.AddListener(delegate { localCoordinateChange(); });
         localYInpute.onValueChanged.AddListener(delegate { localCoordinateChange(); });
-        /*        localRotateInpute.onValueChanged.AddListener(delegate { () => controller.localRotateChange(localRotateInpute.text); });
-                localScaleXInpute.onValueChanged.AddListener(delegate { () => controller.localScaleChange(localScaleXInpute.text, localScaleYInpute.text); });
-                localScaleYInpute.onValueChanged.AddListener(delegate { () => controller.localScaleChange(localScaleXInpute.text, localScaleYInpute.text); });
-                cubeXInpute.onValueChanged.AddListener(delegate { () => controller.cubeChange(cubeXInpute.text, cubeYInpute.text); });
-                cubeYInpute.onValueChanged.AddListener(delegate { () => controller.cubeChange(cubeXInpute.text, cubeYInpute.text); });*/
+        localRotateInpute.onValueChanged.AddListener(delegate { localRotateChange(); });
+        localScaleXInpute.onValueChanged.AddListener(delegate { localScaleChange(); });
+        localScaleYInpute.onValueChanged.AddListener(delegate { localScaleChange(); });
+        cubeXInpute.onValueChanged.AddListener(delegate { cubeChange(); });
+        cubeYInpute.onValueChanged.AddListener(delegate { cubeChange(); });
     }
 
     private void localCoordinateChange()
     {
-        coordinateEventArgs args = new coordinateEventArgs();
-        args.x = localXInpute.text;
-        args.y = localYInpute.text;
+        coordinateEventArgs args = new coordinateEventArgs(localXInpute.text, localYInpute.text);
 
         EventHandler<coordinateEventArgs> handler = localCoordinateChanged;
         if (handler != null)
@@ -39,11 +39,64 @@ public class Inputs : MonoBehaviour
         }
     }
 
+    private void localRotateChange()
+    {
+        rotateEventArgs args = new rotateEventArgs(localRotateInpute.text);
+
+        EventHandler<rotateEventArgs> handler = localRotateChanged;
+        if (handler != null)
+        {
+            handler(this, args);
+        }
+    }
+
+    private void localScaleChange()
+    {
+        coordinateEventArgs args = new coordinateEventArgs(localScaleXInpute.text, localScaleYInpute.text);
+
+        EventHandler<coordinateEventArgs> handler = localScaleChanged;
+        if (handler != null)
+        {
+            handler(this, args);
+        }
+    }
+
+    private void cubeChange()
+    {
+        coordinateEventArgs args = new coordinateEventArgs(cubeXInpute.text, cubeYInpute.text);
+
+        EventHandler<coordinateEventArgs> handler = cubeChanged;
+        if (handler != null)
+        {
+            handler(this, args);
+        }
+    }
+
     public event EventHandler<coordinateEventArgs> localCoordinateChanged;
+    public event EventHandler<rotateEventArgs> localRotateChanged;
+    public event EventHandler<coordinateEventArgs> localScaleChanged;
+    public event EventHandler<coordinateEventArgs> cubeChanged;
+
 
 }
 
 public class coordinateEventArgs : EventArgs
 {
     public string x, y;
+
+    public coordinateEventArgs(string x, string y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+public class rotateEventArgs : EventArgs
+{
+    public string d;
+
+    public rotateEventArgs(string d)
+    {
+        this.d = d;
+    }
 }
